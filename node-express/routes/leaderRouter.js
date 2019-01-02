@@ -20,7 +20,7 @@ leaderRouter.route('/')
 
 //POST Method
 .post( (req, res, next) =>{
-    res.end('Will add the leader: ' + req.boyd.name + 
+    res.end('Will add the leader: ' + req.body.name + 
     'with leaders: ' + req.body.description);
 })
 

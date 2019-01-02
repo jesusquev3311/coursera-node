@@ -20,7 +20,7 @@ promoRouter.route('/')
 
 //POST Method
 .post( (req, res, next) =>{
-    res.end('Will add the promotion : ' + req.boyd.name + 
+    res.end('Will add the promotion : ' + req.body.name + 
     'with details: ' + req.body.description);
 })
 
