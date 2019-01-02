@@ -25,7 +25,7 @@ dishRouter.route('/')
 })
 
 //PUT Method
-app.put( (req, res, next) =>{
+.put( (req, res, next) =>{
     res.statusCode = 403;
     res.end('PUT operation are not supported on dishes');
 })
