@@ -1,6 +1,7 @@
 const express = require('express');
 const app = new express();
 const port = process.env.port || 3000;
+const hostname = 'localhost';
 const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -26,5 +27,5 @@ app.use((req,res,next) =>{
 const server = http.createServer(app);
 
 server.listen(port,() =>{
-    console.log(`Listening to Port: ${port}`);
+    console.log(`Listening to Port: ${port} at http://${hostname}`);
 });
