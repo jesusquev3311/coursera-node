@@ -4,40 +4,14 @@ const port = process.env.port || 3000;
 const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const dishRouter = require('./routes/dishRouter');
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+app.use('/dishes', dishRouter);
 
-//all request - this will be executed before any other method
-app.all('/dishes', (req,res, next)=>{
-    res.statusCode = 200;
-    res.setHeader('content-type', 'text/html');
-    next();
-});
-
-//GET request
-app.get('/dishes', (req,res,next)=>{
-    res.end('Will send All Dishes');
-});
-
-//POST Method
-app.post('/dishes', (req, res, next) =>{
-    res.end('Will add the dish: ' + req.boyd.name + 
-    'with details: ' + req.body.description);
-});
-
-//PUT Method
-app.put('/dishes', (req, res, next) =>{
-    res.statusCode = 403;
-    res.end('PUT operation are not supported on dishes');
-});
-
-//DELETE Method
-app.delete('/dishes', (req, res, next) =>{
-    res.end('This will Delete all the dishes');
-});
-
+/* Assignment 1
 //Single Items 
 //GET request
 app.get('/dishes/dishId', (req,res,next)=>{
@@ -60,7 +34,7 @@ app.put('/dishes/dishId', (req, res, next) =>{
 //DELETE Method
 app.delete('/dishes/dishId', (req, res, next) =>{
     res.end('This will Delete the dish: ' + req.params.dishId);
-});
+});*/
 
 app.use((req,res,next) =>{
     res.statusCode = 200;
