@@ -36,7 +36,7 @@ promoRouter.route('/')
 });
 
 //single post
-dishRouter.route('/:promoId')
+promoRouter.route('/:promoId')
 // Assignment 1
 
 //Single Items 
