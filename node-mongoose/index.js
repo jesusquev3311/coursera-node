@@ -18,12 +18,23 @@ connect.then((db) =>{
     .then((dish) =>{
         console.log(dish);
 
-       return Dishes.find({}).exec();
+       return Dishes.findByIdAndUpdate(dish._id,{
+           $set:{description: "Updated Description"}
+       }, {new: true}).exec();
     })
-    .then((dishes) =>{
-        console.log(dishes);
+    .then((dish) =>{
+        console.log(dish);
+        dish.comments.push({
+            rating: 5,
+            comment: "This is a comment",
+            author: 'Armando Banquito'
+        });
+
+        return dish.save();
     })
-    .then(() =>{
+    .then((dish) =>{
+        console.log(dish);
+          
         return Dishes.remove({});
     })
     .then(() =>{
