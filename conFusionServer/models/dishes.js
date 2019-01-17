@@ -1,7 +1,9 @@
 //import the moongose pkg
 const moongose = require('mongoose');
-
 const Schema = moongose.Schema;
+//adding the currency type to mongoose 
+require('mongoose-currency').loadType(moongose);
+const currency = moongose.Types.Currency;
 
 const commentSchema = new Schema({
     rating:{
@@ -29,7 +31,28 @@ const dishSchema = new Schema({
         type: String,
         required: true
     },
-    comments: [commentSchema]
+    image:{
+        type: String,
+        required: true
+    },
+    category:{
+        type: String,
+        required: true
+    },
+    label: {
+        type: String,
+        default: ''
+    },
+    price:{
+        type: currency,
+        required: true
+    },
+    feature:{
+        type:Boolean,
+        default: false
+    },
+    comments: [commentSchema],
+    
 }, {
     timestamps: true
 });
