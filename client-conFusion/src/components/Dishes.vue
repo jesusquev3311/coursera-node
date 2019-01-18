@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     async getDishes () {
-      const response = await DishesService.fetchDishes()
+      const response = await DishesService.Dishes().getAll()
       this.dishes = response.data
     }
   }

@@ -1,7 +1,9 @@
 import Api from '@/services/Api'
 
 export default {
-  fetchDishes () {
-    return Api().get('dishes')
+  Dishes (url = 'dishes') {
+    return {
+      getAll: () => Api().get('dishes')
+    } 
   }
 }
