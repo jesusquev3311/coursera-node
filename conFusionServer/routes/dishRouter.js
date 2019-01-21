@@ -61,13 +61,13 @@ dishRouter.route('/:dishId')
 
 //POST Method
 .post((req, res, next) =>{
-    res.statusCode(403);
+    res.status(403);
     res.end('POST is not supportted on Dish: ' + req.params.dishId);
 })
 
 //PUT Method
 .put( (req, res, next) =>{
-    Dishes.findByIdAndUpdate(req.params.id, {$set: req.body},{new: true})
+    Dishes.findByIdAndUpdate(req.params.dishId, {$set: req.body},{new: true})
     .then((dish)=>{
         res.status(200);
         res.setHeader('content-type', 'aplication/json');
