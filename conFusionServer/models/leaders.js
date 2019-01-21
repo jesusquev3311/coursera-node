@@ -5,7 +5,7 @@ const Schema = moongose.Schema;
 require('mongoose-currency').loadType(moongose);
 const currency = moongose.Types.Currency;
 
-const promotionSchema = new Schema({
+const leadersSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -15,19 +15,14 @@ const promotionSchema = new Schema({
         type: String,
         required: true
     },
-    label: {
+    abbr:{
         type: String,
-        default: ''
-    },
-    price:{
-        type: currency,
         required: true
     },
     description: {
         type: String,
         required: true
     },
-   
     featured:{
         type:Boolean,
         default: false
@@ -37,6 +32,6 @@ const promotionSchema = new Schema({
     timestamps: true
 });
 
-let Promotions = moongose.model('promotion', promotionSchema);
+let Leaders = moongose.model('leader', promotionSchema);
 
-module.exports = Promotions;
+module.exports = Leaders;

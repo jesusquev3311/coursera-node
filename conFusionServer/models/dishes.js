@@ -50,7 +50,7 @@ const dishSchema = new Schema({
         type: currency,
         required: true
     },
-    feature:{
+    featured:{
         type:Boolean,
         default: false
     },
