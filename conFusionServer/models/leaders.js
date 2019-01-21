@@ -32,6 +32,6 @@ const leadersSchema = new Schema({
     timestamps: true
 });
 
-let Leaders = moongose.model('leader', promotionSchema);
+let Leaders = moongose.model('leader', leadersSchema);
 
 module.exports = Leaders;
