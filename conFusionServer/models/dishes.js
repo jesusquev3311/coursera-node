@@ -15,6 +15,9 @@ const commentSchema = new Schema({
     comment:{
         type: String,
         required: true
+    }, author:{
+        type: String,
+        required: true
     }
 },
 {

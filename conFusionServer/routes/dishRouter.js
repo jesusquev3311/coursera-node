@@ -99,7 +99,7 @@ dishRouter.route('/:dishId/comments')
             res.setHeader('content-type', 'aplication/json');
             res.json(dish.comments)
         } else {
-            err = new  Error('Dish' + req.parms.dishId + 'not found');
+            err = new  Error('Dish' + req.params.dishId + 'not found');
             err.status = 404;
             return next(err);
         }
@@ -110,8 +110,8 @@ dishRouter.route('/:dishId/comments')
 
 //POST Method
 .post( (req, res, next) =>{
-    Dishes.findById(req.parms.dishId).then((dish) =>{
-        if(dish){
+    Dishes.findById(req.params.dishId).then((dish) =>{
+        if(dish != null){
             dish.comments.push(req.body);
             dish.save().then((dish)=>{
                 console.log('comment created');
@@ -120,7 +120,7 @@ dishRouter.route('/:dishId/comments')
                 res.json(dish)
             })
         } else {
-            err = new Error('Dish ' + req.parms.dishId + 'Not Found');
+            err = new Error('Dish ' + req.params.dishId + 'Not Found');
             err.status = 404;
             return next(err);
         }
@@ -140,7 +140,7 @@ dishRouter.route('/:dishId/comments')
     Dishes.findById(req.params.dishId).then((dish)=>{
         if (dish) {
             for (i = (dish.comments.length - 1); i >= 0; i--){
-                dish.comments[i]._id.remove();
+                dish.comments.id(dish.comments[i]._id).remove();
             }
             dish.save().then((dish) =>{
                 console.log('dish comments removed');
@@ -149,7 +149,7 @@ dishRouter.route('/:dishId/comments')
                 res.json(dish)
             })
         } else {
-            err = new Error('Dish ' + req.parms.id + 'Not Found');
+            err = new Error('Dish ' + req.params.id + 'Not Found');
             err.status = 404;
             return next(err);
         }
@@ -169,7 +169,7 @@ dishRouter.route('/:dishId/comments/:commentId')
             res.setHeader('content-type', 'aplication/json');
             res.json(dish.comments.id(req.params.commentId));
         } else if(!dish) {
-            err = new  Error('Dish' + req.parms.dishId + 'not found');
+            err = new  Error('Dish' + req.params.dishId + 'not found');
             err.status = 404;
             return next(err);
         } else {
@@ -190,14 +190,14 @@ dishRouter.route('/:dishId/comments/:commentId')
 
 //PUT Method
 .put( (req, res, next) =>{
-    Dishes.findById(req.parms.dishId).then((dish)=>{
+    Dishes.findById(req.params.dishId).then((dish)=>{
         if (dish && dish.comments.id(req.params.commentId)){
             if (req.body.rating){
-                dish.comments.id(req.parms.commentId).rating = req.body.rating;
+                dish.comments.id(req.params.commentId).rating = req.body.rating;
             }
 
             if( req.body.comment){
-                dish.comments.id(req.parms.commentId).comment = req.body.comment;
+                dish.comments.id(req.params.commentId).comment = req.body.comment;
             }
             dish.save().then((dish)=>{
                 console.log('dish comments updated');
@@ -207,7 +207,7 @@ dishRouter.route('/:dishId/comments/:commentId')
             })
 
         }else if(!dish) {
-            err = new  Error('Dish' + req.parms.dishId + 'not found');
+            err = new  Error('Dish' + req.params.dishId + 'not found');
             err.status = 404;
             return next(err);
         } else {
@@ -223,7 +223,7 @@ dishRouter.route('/:dishId/comments/:commentId')
 .delete((req, res, next) =>{
     Dishes.findById(req.params.dishId).then((dish)=>{
         if (dish && dish.comments.id(req.params.commentId)) {
-            dish.comments.id(req.parms.commentId).remove();
+            dish.comments.id(req.params.commentId).remove();
             dish.save().then((dish) =>{
                 console.log('dish comment '+ req.params.commentId +' removed');
                 res.status(200);
@@ -231,11 +231,11 @@ dishRouter.route('/:dishId/comments/:commentId')
                 res.json(dish)
             })
         } else if(!dish) {
-            err = new Error('Dish ' + req.parms.id + 'Not Found');
+            err = new Error('Dish ' + req.params.id + 'Not Found');
             err.status = 404;
             return next(err);
         }else {
-            err = new Error('Dish ' + req.parms.id + 'Not Found');
+            err = new Error('Dish ' + req.params.id + 'Not Found');
             err.status = 404;
             return next(err);
         }
