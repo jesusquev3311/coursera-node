@@ -7,6 +7,11 @@ const mongoose = require('mongoose');
 const Dishes = require('./models/dishes');
 const cors = require('cors');
 
+var corsOptions = {
+  origin: 'http://localhost:5000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+}
+
 //database URL
 const url = 'mongodb://localhost:27017/conFusion';
 
@@ -33,7 +38,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
