@@ -4,18 +4,19 @@
       <h1>{{this.title}}</h1>
       <div class="row">
         <template v-for="dish in dishes">
-          <div class="col-sm-4">
-            <div class="dish-item">
+          <div :key="dish.id" class="col-sm-4">
+            <div  class="dish-item">
                 <span class="img-wrapper" > <img :src= "dish.image" alt=""></span>
                 <span><b>{{ dish.name }}</b></span><br />
                 <span>{{ dish.description }}</span>
                 <span class="d-block">Price: {{ dish.price}}</span>
                 <div class="comments">
                   <template v-for="comment in dish.comments">
-                    <span class="comment">
+                    <span :key="comment.id" class="commnet">
                       <span>{{  comment.rating }}</span>
                       <span>{{  comment.author }}</span>
                       <span>{{  comment.description }}</span>
+                      <button type="button" class="btn btn-danger">Remove</button>
                     </span>
                   </template>
                 </div>
@@ -33,16 +34,19 @@
                   <input type="text" v-model="dish.name" class="form-control" placeholder="Dish Name">
                 </div>
                 <div class="form-group">
-                  <input type="text" v-model="dish.description" class="form-control" placeholder="Dish Description">  
+                  <input type="text" v-model="dish.description" class="form-control" placeholder="Dish Description">
                 </div>
-
-                <input type="text" v-model="dish.price" class="form-control" placeholder="Dish Price">  
-                <input type="text" v-model="dish.image" class="form-control" placeholder="Dish Image URL">  
-                <input type="text" v-model="dish.category" class="form-control" placeholder="Dish Category">  
+                <div class="form-group">
+                  <input type="text" v-model="dish.price" class="form-control" placeholder="Dish Price">
+                </div>
+                <div class="form-group">
+                  <input type="text" v-model="dish.image" class="form-control" placeholder="Dish Image URL">
+                </div>
+                <div class="form-group">
+                  <input type="text" v-model="dish.category" class="form-control" placeholder="Dish Category">
+                </div>
                 <button type="submit">send</button>
               </form>
-              
-
             </div>
         </div>
       </div>
@@ -56,25 +60,25 @@ import DishesService from '@/services/DishesService'
 
 export default {
   name: 'Dishes',
-    data () {
-      return {
-        dishes: [],
-        dish:{
-          name:'',
-          description:'',
-          price: '',
-          image: '',
-          category: ''
-        },
-        title: 'Dishes'
-      }
+  data () {
+    return {
+      dishes: [],
+      dish: {
+        name: '',
+        description: '',
+        price: '',
+        image: '',
+        category: ''
+      },
+      title: 'Dishes'
+    }
   },
   mounted () {
     this.getDishes()
   },
   computed: {
-    dishesUp(){
-      return this.getDishes().dishes;
+    dishesUp () {
+      return this.getDishes().dishes
     }
   },
   methods: {
@@ -83,8 +87,7 @@ export default {
       this.dishes = response.data
     },
     async addDish () {
-      event.preventDefault();
-      
+      event.preventDefault()
       await DishesService.Dishes().createOne({
         name: this.dish.name,
         description: this.dish.description,
@@ -92,10 +95,10 @@ export default {
         category: this.dish.category,
         image: this.dish.image
       }).then((response) => {
-          console.log('dish created: ', response)
-          this.$nextTick(function () {
-            this.dishesUp;
-          })
+        console.log('dish created: ', response)
+        this.$nextTick(function () {
+          return this.dishesUp
+        })
       }).catch(err => console.log('there was an error: ', err))
 
       this.$router.push({name: 'Dishes'})
@@ -117,5 +120,3 @@ export default {
     }
   }
 </style>
-
-

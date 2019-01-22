@@ -5,6 +5,6 @@ export default {
     return {
       getAll: () => Api().get(url),
       createOne: (dish) => Api().post(url, dish)
-    } 
+    }
   }
 }
