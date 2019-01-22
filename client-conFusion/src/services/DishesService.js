@@ -4,7 +4,8 @@ export default {
   Dishes (url = 'dishes') {
     return {
       getAll: () => Api().get(url),
-      createOne: (dish) => Api().post(url, dish)
+      createOne: (dish) => Api().post(url, dish),
+      deleteOne: (id) => Api().delete(`${url}/${id}`)
     }
   }
 }

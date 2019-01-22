@@ -5,7 +5,7 @@
       <div class="row">
         <template v-for="dish in dishes">
           <div :key="dish.id" class="col-sm-4">
-            <div  class="dish-item">
+            <div class="dish-item">
                 <span class="img-wrapper" > <img :src= "dish.image" alt=""></span>
                 <span><b>{{ dish.name }}</b></span><br />
                 <span>{{ dish.description }}</span>
@@ -16,10 +16,10 @@
                       <span>{{  comment.rating }}</span>
                       <span>{{  comment.author }}</span>
                       <span>{{  comment.description }}</span>
-                      <button type="button" class="btn btn-danger">Remove</button>
                     </span>
                   </template>
                 </div>
+                <button type="button" class="btn btn-danger" @click="removeDish(dish._id)">Remove</button>
             </div>
           </div>
         </template>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                   <input type="text" v-model="dish.category" class="form-control" placeholder="Dish Category">
                 </div>
-                <button type="submit">send</button>
+                <button type="submit" class="btn btn-primary btn-block">send</button>
               </form>
             </div>
         </div>
@@ -64,6 +64,7 @@ export default {
     return {
       dishes: [],
       dish: {
+        _id: '',
         name: '',
         description: '',
         price: '',
@@ -102,8 +103,17 @@ export default {
       }).catch(err => console.log('there was an error: ', err))
 
       this.$router.push({name: 'Dishes'})
-
-      console.log('result:', this.dish)
+      return this.dishesUp
+    },
+    async removeDish (dishId) {
+      await DishesService.Dishes().deleteOne(dishId)
+        .then((response) => {
+          console.log('removed ', response)
+          this.$nextTick(function () {
+            return this.dishesUp
+          })
+        }).catch(err => console.log(err))
+      this.$router.push({ name: 'Dishes' })
     }
   }
 }
