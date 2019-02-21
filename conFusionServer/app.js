@@ -6,6 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const passport = require('passport');
+const authenticate = require('./authenticate');
 const cors = require('cors');
 
 var corsOptions = {
@@ -49,22 +51,19 @@ app.use(session({
     resave: false,
     store: new FileStore()
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 function auth(req, res, next) {
-    if (!req.session.user) {
+    if (!req.user) {
         let err = new Error('You are not logged in');
-        err.status = 401;
+        err.status = 403;
         next(err);
     } else {
-        if (req.session.user === 'authenticated') {
-            next();
-        } else {
-            var err = new Error('You are not authenticated!');
-            err.status = 403;
-            next(err);
-        }
+        next();
     }
 }
 
