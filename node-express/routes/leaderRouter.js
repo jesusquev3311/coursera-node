@@ -60,7 +60,7 @@ leaderRouter.route('/:leaderId')
 
 //DELETE Method
 .delete((req, res, next) =>{
-    res.end('This will Delete the Leader: ' + req.params.leaderId);
+    res.end('This will Delete Leader: ' + req.params.leaderId);
 });
 
 module.exports = leaderRouter;
